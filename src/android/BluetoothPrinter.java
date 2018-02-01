@@ -186,8 +186,27 @@ public class BluetoothPrinter extends CordovaPlugin {
 		try {
 			// Standard SerialPortService ID
 			UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-			mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
-			mmSocket.connect();
+			 try {
+                                 this.mmSocket = this.mmDevice.createRfcommSocketToServiceRecord(localUUID);
+                            } catch (Exception e) {Log.e("","Error creating socket");}
+
+                            try {
+                                this.mmSocket.connect();
+                                Log.e("","Connected");
+                            } catch (IOException e) {
+                                Log.e("",e.getMessage());
+                                try {
+                                    Log.e("","trying fallback...");
+
+                                    this.mmSocket =(BluetoothSocket) this.mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(this.mmDevice,1);
+                                    this.mmSocket.connect();
+
+                                    Log.e("","Connected");
+                                }
+                             catch (Exception e2) {
+                                 Log.e("", "Couldn't establish Bluetooth connection!");
+                              }
+                            }
 			mmOutputStream = mmSocket.getOutputStream();
 			mmInputStream = mmSocket.getInputStream();
 			beginListenForData();
