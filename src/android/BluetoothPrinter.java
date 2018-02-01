@@ -187,7 +187,7 @@ public class BluetoothPrinter extends CordovaPlugin {
 			// Standard SerialPortService ID
 			UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 			 try {
-                                 this.mmSocket = this.mmDevice.createRfcommSocketToServiceRecord(localUUID);
+                                 this.mmSocket = this.mmDevice.createRfcommSocketToServiceRecord(uuid);
                             } catch (Exception e) {Log.e("","Error creating socket");}
 
                             try {
