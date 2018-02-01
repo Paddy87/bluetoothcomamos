@@ -189,11 +189,7 @@ public class BluetoothPrinter extends CordovaPlugin {
 			 try {
                                  this.mmSocket = this.mmDevice.createRfcommSocketToServiceRecord(uuid);
                             } catch (Exception e) {
-                                String errMsg = e.getMessage();
-                                Log.e(LOG_TAG, errMsg);
-                                e.printStackTrace();
-                                callbackContext.error(errMsg);
-                                return false;
+
                             }
 
                             try {
@@ -208,14 +204,14 @@ public class BluetoothPrinter extends CordovaPlugin {
                                     this.mmSocket.connect();
 
                                     Log.e("","Connected");
-                                }
-                             catch (Exception e2) {
-                                 String errMsg = e.getMessage();
-                                Log.e(LOG_TAG, errMsg);
-                                e.printStackTrace();
-                                callbackContext.error(errMsg);
-                                return false;
-                              }
+                                    }
+                                 catch (Exception e2) {
+                                     String errMsg = e.getMessage();
+                                    Log.e(LOG_TAG, errMsg);
+                                    e.printStackTrace();
+                                    callbackContext.error(errMsg);
+                                    return false;
+                                  }
                             }
 			mmOutputStream = mmSocket.getOutputStream();
 			mmInputStream = mmSocket.getInputStream();
