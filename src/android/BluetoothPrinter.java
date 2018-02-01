@@ -188,7 +188,13 @@ public class BluetoothPrinter extends CordovaPlugin {
 			UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 			 try {
                                  this.mmSocket = this.mmDevice.createRfcommSocketToServiceRecord(uuid);
-                            } catch (Exception e) {Log.e("","Error creating socket");}
+                            } catch (Exception e) {
+                                String errMsg = e.getMessage();
+                                Log.e(LOG_TAG, errMsg);
+                                e.printStackTrace();
+                                callbackContext.error(errMsg);
+                                return false;
+                            }
 
                             try {
                                 this.mmSocket.connect();
@@ -204,7 +210,11 @@ public class BluetoothPrinter extends CordovaPlugin {
                                     Log.e("","Connected");
                                 }
                              catch (Exception e2) {
-                                 Log.e("", "Couldn't establish Bluetooth connection!");
+                                 String errMsg = e.getMessage();
+                                Log.e(LOG_TAG, errMsg);
+                                e.printStackTrace();
+                                callbackContext.error(errMsg);
+                                return false;
                               }
                             }
 			mmOutputStream = mmSocket.getOutputStream();
